@@ -1,4 +1,5 @@
 import { base, getbtnsave } from "./base.js";
+import { getbtndel, getdonempost } from "./event.js";
 
 export const form = document.createElement('form');
 export const div = document.createElement('div');
@@ -52,7 +53,7 @@ const createForm = (app) => {
 	`;
 	// form.id = 'form-todo';
 	app.append(form);
-	
+	form[1].setAttribute('disabled', 'true');
 	createTable(app, form);
 	
 };
@@ -86,9 +87,9 @@ const createTable = (app, form) => {
 	table.append(list);
 	div.append(table);
 
-	getbtnsave(form);
-	// getformpost(form);
-	// getbtndel(form);
+	getbtnsave(form);	
+	getbtndel(form, list, div);
+	getdonempost(form, list, div);
 };
 
 
