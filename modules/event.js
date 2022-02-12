@@ -32,18 +32,8 @@ export const getbtndel = (form, list, div) => {
 			trdel.remove();
 		
 
-			// const iddelete = num.dataset.id;
-			// console.log('iddel', iddelete)
-
-			// let data = getTodoLS();
-			// console.log('data', data);
-			// console.log('base.todo', base.todo);
-
-			// let newdata = base.todo.filter(el => el.id !== iddelete);
-			// console.log('el', el);
-
 			getTodoLS();
-			let newdata = base.todo.filter(el => el.id !== Number(num.innerHTML));
+			let newdata = base.todo.filter(el => el.post !== post);
 			console.log('newdata', newdata);
 
 			base.todo = newdata;
