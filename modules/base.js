@@ -1,28 +1,34 @@
-import { form, div, table, list } from "./start.js";
+import { form, div, table, list} from "./start.js";
 
 import { getTodoLS, setTodoLS } from "./local.js";
+
+
 
 const findlist = document.querySelector('.find');
 
 
+const username = prompt('Введите ваше имя', 'Vlad');
+
+export const getuserName = () => {
+	return username;
+}
+
+
+
 export const base = {
-	user: '',
-	users: [],
-	getusers() {
-		console.log('users from getusers', this.users);
-	},
+	user: username,
 	todo: getTodoLS(),
 	check(id) {
 		for (let i = 0; i < base.todo.length; i++) {
-			if (base.todo[i].id === id) {
-				base.todo[i].ready = 'Выполнена';
+			if (base.todo[i].id == id) {
+				base.todo[i].ready = 'Выполнена';				
 				console.log('id from check(id)', id);
+				setTodoLS();
 			}
-		};
-		
+		};		
 	},
 	addTodo(post) {
-		getTodoLS();
+		// getTodoLS(username);
 		const todo = {
 			id: base.todo.length + 1,
 			author: this.user,
@@ -58,7 +64,6 @@ export const getbtnsave = (form) => {
 
 	formcontrol.addEventListener('input', checkTodo);
 
-
 	
 	renderTodo(list);
 	form.addEventListener('submit', e => {
@@ -66,12 +71,12 @@ export const getbtnsave = (form) => {
 
 		const authorText = base.user;
 		const postText = form[0].value;
-		console.log(postText.length);
+		// console.log(postText.length);
 		const readyText = 'В процессе';
 
 		const objTodo = base.addTodo(postText);
-		console.log('objTodo',objTodo);
-		console.log('base.todo', base.todo);
+		// console.log('objTodo',objTodo);
+		// console.log('base.todo', base.todo);
 				
 		const todoTr = createTodo(objTodo);
 		list.append(todoTr);
@@ -82,15 +87,16 @@ export const getbtnsave = (form) => {
 		form.reset();
 		
 		form[1].setAttribute('disabled', 'true');
+		setTodoLS();
 	});
 	
 };
 
 function createTodo(objTodo) {
-
+	
 	const todoItem = `
 			<tr>			
-				<td  data-id="${Math.random().toString().substring(2, 7)}" class="goods__row">${objTodo.id}</td>
+				<td class="goods__row">${objTodo.id = Math.random().toString().substring(2, 7)}</td>
 				<td class="task">
 					${objTodo.post}
 				</td>
@@ -101,6 +107,9 @@ function createTodo(objTodo) {
 					</button>
 					<button class="btn btn-success">
 						Завершить
+					</button>
+					<button class="btn btn-secondary">
+						Редактировать
 					</button>
 				</td>
 			</tr>			
@@ -115,14 +124,17 @@ function createTodo(objTodo) {
 
 
 function renderTodo(list) {
-	for (let i = 0; i < base.todo.length; i++) {
-		const todoLi = createTodo(base.todo[i]);
-		console.log('todoLi from renderTodo', todoLi);
-		list.append(todoLi);		
-	};
-	setTodoLS();
-};
+	// getTodoLS(username);
+	if (base.todo) {
+		for (let i = 0; i < base.todo.length; i++) {
+			const todoLi = createTodo(base.todo[i]);
+			// console.log('todoLi from renderTodo', todoLi);
+			list.append(todoLi);
+		};
+	}
 
+	
+};
 
 
 
