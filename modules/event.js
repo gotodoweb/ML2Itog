@@ -101,13 +101,44 @@ export const getcontediatable = (list) => {
 		let tasks = document.getElementsByClassName('task');
 		const btnmake = event.target.closest('.btn.btn-secondary');
 		const bake = document.querySelector('.task');
-
+		
 		if (btnmake) {
 			for (var i = 0; i < tasks.length; i++) {
 				// console.log('click');
-				console.log('click', tasks[i].innerHTML);
+				
+				console.log('tasks[i])', tasks[i], tasks[i].textContent);
 				tasks[i].setAttribute('contenteditable', 'true');
+				
+				let first = event.target.closest('tr');
+				// console.log('first', first);
 
+				let num = (first.firstElementChild);
+				// console.log('num', num, Number(num.innerHTML));
+
+				// base.check(Number(num.innerHTML));
+				// setTodoLS();
+
+				let num2 = (num.nextSibling);
+				console.log('num2', num2, num2.nextSibling);
+				// const post = (num2.nextSibling.innerHTML).trim();
+				// console.log('post', post);
+
+				
+				tasks[i].addEventListener('input', function() {
+					console.log('num2.nextSibling.innerHTML).trim()', num2.nextSibling.textContent);
+					// let ew = num2.nextSibling.innerHTML.trim();
+					// tasks[i].textContent = ew;
+					// tasks[i].setAttribute('contenteditable', 'false');
+					// let newda = getTodoLS();
+					// console.log('newda', newda[1].post);
+
+					base.todo[1].post = num2.nextSibling.textContent;
+					console.log('newdapost', base.todo[1].post);
+					setTodoLS();
+
+				}, false);
+				
+				setTodoLS();
 				if(false) {
 					function sww(e) {
 						e.preventDefault();
@@ -145,9 +176,11 @@ export const getcontediatable = (list) => {
 				// };
 				// tasks[i].addEventListener('keydown', sww);
 				// savenewpost(list);
-
+				
 			}
+			
 		}
+		
 	}
 
 
