@@ -52,7 +52,7 @@ export const getvalue = (list) => {
 			if (btnv[i].previousElementSibling.value === 'обычная') {
 				// if ((base.prior === 'обычная') || (base.prior === '')) {
 				getTodoLS();
-				console.log('base.todo[i].priority', base.todo[i].priority);
+				// console.log('base.todo[i].priority', base.todo[i].priority);
 				// console.log('btnv[i].previousElementSibling.value', btnv[i].previousElementSibling.value);
 				// console.log('btnv[i].value', btnv[i].value, btnv[i]);
 				// console.log('e.target.closest(.value).value', e.target.closest('.value').value);
@@ -81,9 +81,9 @@ export const getvalue = (list) => {
 				// tr1[i + 1].classList.add('table-light');
 
 				for (let val of tr1) {
-					console.log('val', val);
+					// console.log('val', val);
 					if (!(val.classList.contains('table-success'))) {
-						console.log('tr1[i + 1]', tr1[i + 1]);
+						// console.log('tr1[i + 1]', tr1[i + 1]);
 						tr1[i + 1].className = "";
 						tr1[i + 1].classList.add('table-light');
 					}
@@ -93,10 +93,10 @@ export const getvalue = (list) => {
 				/************************* */
 				
 				let first1 = e.target.closest('tr');
-				console.log('first1', first1);
+				// console.log('first1', first1);
 
 				let num1 = (first1.firstElementChild);
-				// base.checkpri(Number(num1.innerHTML), 'обычная');
+				base.checkpri(Number(num1.innerHTML), 'обычная');
 
 				setTodoLS();
 
@@ -107,7 +107,7 @@ export const getvalue = (list) => {
 			if (btnv[i].previousElementSibling.value === 'важная') {
 				// if (base.prior === 'важная') {
 				getTodoLS();
-				console.log('base.todo[i].priority', base.todo[i].priority);
+				// console.log('base.todo[i].priority', base.todo[i].priority);
 				// console.log('btnv[i].previousElementSibling.value', btnv[i].previousElementSibling.value);
 				// console.log('btnv[i].value', btnv[i].value, btnv[i]);
 				// console.log('e.target.closest(.value).value', e.target.closest('.value').value);
@@ -136,9 +136,9 @@ export const getvalue = (list) => {
 				// tr2[i + 1].classList.add('table-warning');
 
 				for (let val of tr2) {
-					console.log('val', val);
+					// console.log('val', val);
 					if (!(val.classList.contains('table-success'))) {
-						console.log('tr2[i + 1]', tr2[i + 1]);
+						// console.log('tr2[i + 1]', tr2[i + 1]);
 						tr2[i + 1].className = "";
 						tr2[i + 1].classList.add('table-warning');
 					}
@@ -148,10 +148,10 @@ export const getvalue = (list) => {
 				/************************* */
 			
 				let first2 = e.target.closest('tr');
-				console.log('first2', first2);
+				// console.log('first2', first2);
 
 				let num2 = (first2.firstElementChild);
-				// base.checkpri(Number(num2.innerHTML), 'важная');
+				base.checkpri(Number(num2.innerHTML), 'важная');
 
 				setTodoLS();
 
@@ -163,7 +163,7 @@ export const getvalue = (list) => {
 
 				// if (base.prior === 'срочная') {
 				getTodoLS();
-				console.log('base.todo[i].priority', base.todo[i].priority);
+				// console.log('base.todo[i].priority', base.todo[i].priority);
 				// console.log('btnv[i].previousElementSibling.value', btnv[i].previousElementSibling.value);
 				// console.log('btnv[i].value', btnv[i].value, btnv[i]);
 				// console.log('e.target.closest(.value).value', e.target.closest('.value').value);
@@ -190,10 +190,10 @@ export const getvalue = (list) => {
 				// let tr = e.target.closest('.table-light');
 				let tr3 = document.querySelectorAll("tr");
 
-				for (let val of tr1) {
-					console.log('val', val);
+				for (let val of tr3) {
+					// console.log('val', val);
 					if (!(val.classList.contains('table-success'))) {
-						console.log('tr3[i + 1]', tr3[i + 1]);
+						// console.log('tr3[i + 1]', tr3[i + 1]);
 						tr3[i + 1].className = "";
 						tr3[i + 1].classList.add('table-danger');
 					}
@@ -204,10 +204,10 @@ export const getvalue = (list) => {
 				/************************* */
 			
 				let first3 = e.target.closest('tr');
-				console.log('first3', first3);
+				// console.log('first3', first3);
 
 				let num3 = (first3.firstElementChild);
-				// base.checkpri(Number(num3.innerHTML), 'срочная');
+				base.checkpri(Number(num3.innerHTML), 'срочная');
 
 				setTodoLS();
 
