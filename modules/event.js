@@ -1,6 +1,6 @@
 import { form, div, table, list } from "./start.js";
 import { base, getuserName } from "./base.js";
-import { getTodoLS, setTodoLS } from "./local.js";
+import { getTodoLS, setTodoLS,} from "./local.js";
 
 export const getbtndel = (form, list, div) => {
 
@@ -18,7 +18,7 @@ export const getbtndel = (form, list, div) => {
 			// console.log('num', Number(num.innerHTML));
 
 			let idd = Number(num.innerHTML);
-			console.log('id который удалять:', idd);
+			// console.log('id который удалять:', idd);
 
 			// let num2 = (num.nextSibling);
 			// console.log('num2', num2);
@@ -33,7 +33,7 @@ export const getbtndel = (form, list, div) => {
 			base.todo = newdata;
 
 			setTodoLS();
-			console.log('base.todo', base.todo);
+			// console.log('base.todo', base.todo);
 
 
 		};
@@ -56,7 +56,7 @@ export const getdonempost = (form, list, div) => {
 			// console.log('first', first);
 
 			let num = (first.firstElementChild);
-			console.log('num', num, Number(num.innerHTML));
+			// console.log('num', num, Number(num.innerHTML));
 
 			base.check(Number(num.innerHTML));
 			setTodoLS();
@@ -66,15 +66,15 @@ export const getdonempost = (form, list, div) => {
 			const post = (num2.nextSibling.innerHTML).trim();
 			// console.log('post', post);
 			// console.log(num2.nextSibling.classList.add('text-decoration-line-through'));
-			num2.nextSibling.classList.add('text-decoration-line-through')
-			first.classList.remove('table-light');
+			num2.nextSibling.classList.add('text-decoration-line-through');
+			first.classList = "";
 			first.classList.add('table-success');
 			setTodoLS();
 			let stat = (num2.nextSibling);
 			let statu = (stat.nextSibling);
 
 			let tatu = (statu.nextSibling);
-			console.log('status', tatu.innerHTML);
+			// console.log('status', tatu.innerHTML);
 
 
 			tatu.innerHTML = 'Выполнена';
@@ -84,9 +84,7 @@ export const getdonempost = (form, list, div) => {
 			// base.check(id);
 			setTodoLS();
 
-
 		};
-
 
 	};
 
@@ -99,16 +97,25 @@ export const getcontediatable = (list) => {
 	function btnmake(event) {
 		event.preventDefault();
 		let tasks = document.getElementsByClassName('task');
-		const btnmake = event.target.closest('.btn.btn-secondary');
-		const bake = document.querySelector('.task');
+
 		
-		if (btnmake) {
-			for (var i = 0; i < tasks.length; i++) {
-				// console.log('click');
-				
-				console.log('tasks[i])', tasks[i], tasks[i].textContent);
+		const bake = document.querySelector('.task');
+		// console.log("tasks btnmake", tasks, bake);
+
+		for (var i = 0; i < tasks.length; i++) {
+			if (tasks[i].contentEditable === "false") {
+				const btnm1 = event.target.closest('.btn.btn-secondary');
+				btnm1.innerText = "Сохранить";
+				// console.log('нажали на кнопку')
+
+				// event.preventDefault();
+				// console.log('btnm.textContent', btnm.textContent);
+
+
+
+				// console.log('tasks[i].previousElementSibling.innerHTML', tasks[i].previousElementSibling.textContent);
 				tasks[i].setAttribute('contenteditable', 'true');
-				
+
 				let first = event.target.closest('tr');
 				// console.log('first', first);
 
@@ -119,95 +126,54 @@ export const getcontediatable = (list) => {
 				// setTodoLS();
 
 				let num2 = (num.nextSibling);
-				console.log('num2', num2, num2.nextSibling);
+				// console.log('num2', num2, num2.nextSibling);
 				// const post = (num2.nextSibling.innerHTML).trim();
 				// console.log('post', post);
+				let im = i;
 
-				
-				tasks[i].addEventListener('input', function() {
-					console.log('num2.nextSibling.innerHTML).trim()', num2.nextSibling.textContent);
-					// let ew = num2.nextSibling.innerHTML.trim();
-					// tasks[i].textContent = ew;
-					// tasks[i].setAttribute('contenteditable', 'false');
-					// let newda = getTodoLS();
-					// console.log('newda', newda[1].post);
-
-					base.todo[1].post = num2.nextSibling.textContent;
-					console.log('newdapost', base.todo[1].post);
-					setTodoLS();
-
-				}, false);
-				
-				setTodoLS();
-				if(false) {
-					function sww(e) {
-						e.preventDefault();
-						const brtn = e.target.closest('.task');
-						let tasks = document.getElementsByClassName('task');
-						if (brtn) {
-							if (brtn.hasAttribute('contenteditable')) {
-								if (e.keyCode === 13) {
-									// можете делать все что угодно со значением текстового поля
-
-									console.log('нужно сохранить новый post  по нажатию Enter');
-									setTodoLS();
-									brtn.setAttribute('contenteditable', 'false');
-								}
-							}
-						};
-					};
-
-					list.addEventListener('keydown', sww);
-				};
-
-
-
-
-				// const bake = event.target.closest('.task');
-				// function sww(e) {
-				// 	if (e.keyCode === 13) {
-				// 		// можете делать все что угодно со значением текстового поля
-
-				// 		console.log('нужно сохранить новый post  по нажатию Enter');
-				// 		setTodoLS();
-				// 		tasks[i].setAttribute('contenteditable', 'false');
-				// 	}
-
-				// };
-				// tasks[i].addEventListener('keydown', sww);
-				// savenewpost(list);
-				
-			}
 			
+
+
+
+				tasks[i].addEventListener('input', function (e) {
+					// console.log('e.target.innerHtml', e.target.previousElementSibling.innerHTML);
+					// console.log('tasks[i].previousElementSibling.innerHTML', tasks[im].previousElementSibling.innerHTML);
+
+
+					if (tasks[im].previousElementSibling.textContent == e.target.previousElementSibling.textContent) {
+						base.todo[im].post = num2.nextSibling.textContent.trim();
+						
+
+						setTodoLS();
+					};
+				});
+
+
+
+			} else {
+				const btnm2 = event.target.closest('.btn.btn-secondary');
+				btnm2.innerText = "Редактировать";
+				// console.log('блок сохранить');
+				
+				// console.log('tasks[i].previousElementSibling.innerHTML', taski[y].previousElementSibling.textContent);
+				tasks[i].setAttribute('contenteditable', 'false');
+
+				
+
+				setTodoLS();
+			}
+
 		}
-		
+
+
 	}
-
-
 
 	list.addEventListener('click', btnmake);
 
-	
-}
+};
 
-// export const savenewpost = (list) => {
 
-// 	function sww(e) {
-// 		e.preventDefault();
-// 		const brtn = e.target.closest('.task');
-// 		let tasks = document.getElementsByClassName('task');
-// 		if (brtn) {
-// 			if (brtn.hasAttribute('contenteditable')) {
-// 				if (e.keyCode === 13) {
-// 					// можете делать все что угодно со значением текстового поля
 
-// 					console.log('нужно сохранить новый post  по нажатию Enter');
-// 					setTodoLS();
-// 					brtn.setAttribute('contenteditable', 'false');
-// 				}
-// 			}
-// 		};
-// 	};
 
-// 	list.addEventListener('keydown', sww);
-// }
+
+
