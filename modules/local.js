@@ -2,6 +2,8 @@
 import { base, getuserName, createMyForm } from "./base.js";
 
 
+
+
 export const getTodoLS = () => {
 	// если данные какие-то есть - получаем через метод getItem c ключом 'todo'
 	for (let key in localStorage) {
@@ -23,6 +25,8 @@ export const setTodoLS = () => {
 
 
 
+
+
 export const getvalue = (list) => {
 
 	function fvalue(e) {
@@ -34,9 +38,13 @@ export const getvalue = (list) => {
 			e.preventDefault();
 
 
+
 			const bake = e.target.closest('.value');
 			// console.log('bake', bake);
 
+			// console.log('bake.value', e.target.closest('.value').value);
+			// btnv[i].value = e.target.closest('s1').value;
+			// console.log('btnv[i].previousElementSibling.value', btnv[i].previousElementSibling.value);
 
 			let io = i;
 
@@ -44,18 +52,43 @@ export const getvalue = (list) => {
 			if (btnv[i].previousElementSibling.value === 'обычная') {
 				// if ((base.prior === 'обычная') || (base.prior === '')) {
 				getTodoLS();
-			
+				console.log('base.todo[i].priority', base.todo[i].priority);
+				// console.log('btnv[i].previousElementSibling.value', btnv[i].previousElementSibling.value);
+				// console.log('btnv[i].value', btnv[i].value, btnv[i]);
+				// console.log('e.target.closest(.value).value', e.target.closest('.value').value);
+
+				// e.target.closest('.value').textContent = 'обычная';
+				// e.target.closest('.value').value = 'обычная';
 				btnv[i].value = 'обычная';
+
+				// console.log('base.todo[i].priority from getvalue1', base.todo[i].priority);
 				base.todo[i].priority = 'обычная';
 
 				setTodoLS();
+				// console.log('base.todo[i].priority from getvalue2', base.todo[i].priority);
+				// bake.classList = "";
+				// bake.classList.add('btn-light');
 
+				// let btn = e.target.closest('.value');
+				// btn.style.backgroundColor = "lime";
+
+				// bake.style.backgroundColor = "lime";
 				btnv[i].style.backgroundColor = "white";
 
 				// let tr = e.target.closest('.table-light');
 				let tr1 = document.querySelectorAll("tr");
-				tr1[i + 1].className = "";
-				tr1[i + 1].classList.add('table-light');
+				// tr1[i + 1].className = "";
+				// tr1[i + 1].classList.add('table-light');
+
+				for (let val of tr1) {
+					console.log('val', val);
+					if (!(val.classList.contains('table-success'))) {
+						console.log('tr1[i + 1]', tr1[i + 1]);
+						tr1[i + 1].className = "";
+						tr1[i + 1].classList.add('table-light');
+					}
+
+				};
 
 				/************************* */
 				
@@ -74,7 +107,13 @@ export const getvalue = (list) => {
 			if (btnv[i].previousElementSibling.value === 'важная') {
 				// if (base.prior === 'важная') {
 				getTodoLS();
+				console.log('base.todo[i].priority', base.todo[i].priority);
+				// console.log('btnv[i].previousElementSibling.value', btnv[i].previousElementSibling.value);
+				// console.log('btnv[i].value', btnv[i].value, btnv[i]);
+				// console.log('e.target.closest(.value).value', e.target.closest('.value').value);
 
+				// e.target.closest('.value').value = 'важная';
+				// e.target.closest('.value').textContent = 'важная';
 				btnv[i].value = 'важная';
 
 				// console.log('base.todo[i].priority from getvalue1', base.todo[i].priority);
@@ -82,13 +121,29 @@ export const getvalue = (list) => {
 
 				setTodoLS();
 
+				// console.log('base.todo[i].priority from getvalue2', base.todo[i].priority);
+				// bake.classList = "";
+				// bake.classList.add('btn-warning');
+				// let bt = e.target.closest('.value');
+				// bt.style.backgroundColor = "yellow";
+				// bake.style.backgroundColor = "yellow";
 				btnv[i].style.backgroundColor = "yellow";
 
 				// let tr = e.target.closest('.table-light');
-				let tr = document.querySelectorAll("tr");
-				console.log('tr', tr);
-				tr[i + 1].className = "";
-				tr[i + 1].classList.add('table-warning');
+				let tr2 = document.querySelectorAll("tr");
+				// console.log('tr', tr);
+				// tr2[i + 1].className = "";
+				// tr2[i + 1].classList.add('table-warning');
+
+				for (let val of tr2) {
+					console.log('val', val);
+					if (!(val.classList.contains('table-success'))) {
+						console.log('tr2[i + 1]', tr2[i + 1]);
+						tr2[i + 1].className = "";
+						tr2[i + 1].classList.add('table-warning');
+					}
+
+				};
 
 				/************************* */
 			
@@ -108,7 +163,7 @@ export const getvalue = (list) => {
 
 				// if (base.prior === 'срочная') {
 				getTodoLS();
-				console.log('i', i);
+				console.log('base.todo[i].priority', base.todo[i].priority);
 				// console.log('btnv[i].previousElementSibling.value', btnv[i].previousElementSibling.value);
 				// console.log('btnv[i].value', btnv[i].value, btnv[i]);
 				// console.log('e.target.closest(.value).value', e.target.closest('.value').value);
@@ -117,7 +172,12 @@ export const getvalue = (list) => {
 				// e.target.closest('.value').value = 'срочная';
 				btnv[i].value = 'срочная';
 
+
+				// console.log('base.todo[i].priority from getvalue1', base.todo[i].priority);
 				base.todo[i].priority = 'срочная';
+
+				// setTodoLS();
+				// console.log('base.todo[i].priority from getvalue2', base.todo[i].priority);
 
 				// bake.classList = "";
 				// bake.classList.add('btn-danger');
@@ -129,8 +189,17 @@ export const getvalue = (list) => {
 
 				// let tr = e.target.closest('.table-light');
 				let tr3 = document.querySelectorAll("tr");
-				tr3[i + 1].className = "";
-				tr3[i + 1].classList.add('table-danger');
+
+				for (let val of tr1) {
+					console.log('val', val);
+					if (!(val.classList.contains('table-success'))) {
+						console.log('tr3[i + 1]', tr3[i + 1]);
+						tr3[i + 1].className = "";
+						tr3[i + 1].classList.add('table-danger');
+					}
+
+				};
+
 
 				/************************* */
 			

@@ -18,7 +18,7 @@ export const getbtndel = (form, list, div) => {
 			// console.log('num', Number(num.innerHTML));
 
 			let idd = Number(num.innerHTML);
-			// console.log('id который удалять:', idd);
+			console.log('id который удалять:', idd);
 
 			// let num2 = (num.nextSibling);
 			// console.log('num2', num2);
@@ -33,7 +33,7 @@ export const getbtndel = (form, list, div) => {
 			base.todo = newdata;
 
 			setTodoLS();
-			// console.log('base.todo', base.todo);
+			console.log('base.todo', base.todo);
 
 
 		};
@@ -153,7 +153,7 @@ export const getcontediatable = (list) => {
 			} else {
 				const btnm2 = event.target.closest('.btn.btn-secondary');
 				btnm2.innerText = "Редактировать";
-				// console.log('блок сохранить');
+				console.log('блок сохранить');
 				
 				// console.log('tasks[i].previousElementSibling.innerHTML', taski[y].previousElementSibling.textContent);
 				tasks[i].setAttribute('contenteditable', 'false');

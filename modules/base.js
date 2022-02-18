@@ -44,13 +44,14 @@ export const base = {
 			author: this.user,
 			post: post,
 			ready: 'В процессе',
-			priority: getTodoLS(),			
+			priority: 'обычная',			
 		};
 
 		base.todo.push(todo);
-
+		// console.log('todo from addTodo', base.todo);
+		// return base.todo[base.todo.length - 1];
 		setTodoLS();
-		// console.log("priority from addTodo", todo.priority);
+		console.log("priority from addTodo", todo.priority);
 	
 		return todo;
 	},
@@ -120,7 +121,7 @@ export function createMyForm() {
 				<option class="table-warning" value="важная">важная</option>
 				<option class="table-danger" value="срочная">срочная</option>
 			</select>
-				<input type="button" class="value" value="обычная">
+				<input type="button" class="value" value="ok">
 		</form>
 	`;
 
