@@ -1,18 +1,11 @@
-
 body {
-
-
 	counter-reset: row_id;
-
-
 }
-
 
 .goods__row {
 	position: relative;
 	color: rgb(255, 255, 255);
 }
-
 
 .goods__row::after {
 	position: absolute;
@@ -22,6 +15,4 @@ body {
 	content: counter(row_id);
 	color: rgb(0, 0, 0);
 	font-weight: 400;
-	
 }
-

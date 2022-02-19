@@ -32,7 +32,7 @@ export const base = {
 		for (let i = 0; i < base.todo.length; i++) {
 			if (base.todo[i].id == id) {
 				base.todo[i].priority = `${pri}`;
-				console.log('base.todo[i].priority from checkpri', base.todo[i].priority);
+				// console.log('base.todo[i].priority from checkpri', base.todo[i].priority);
 				setTodoLS();
 			}
 		};
@@ -44,14 +44,14 @@ export const base = {
 			author: this.user,
 			post: post,
 			ready: 'В процессе',
-			priority: 'обычная',			
+			priority: 'обычная',
 		};
-
+		// console.log('base.todo.priority', base.todo.priority);
 		base.todo.push(todo);
 		// console.log('todo from addTodo', base.todo);
 		// return base.todo[base.todo.length - 1];
 		setTodoLS();
-		console.log("priority from addTodo", todo.priority);
+		// console.log("priority from addTodo", todo.priority);
 	
 		return todo;
 	},
@@ -88,14 +88,15 @@ export const getbtnsave = (form) => {
 		// console.log(postText.length);
 		const readyText = 'В процессе';
 
+
 		const objTodo = base.addTodo(postText);
-		// console.log('objTodo',objTodo);
+		// console.log('objTodo',objTodo.priority);
 		// console.log('base.todo', base.todo);
 
 		const todoTr = createTodo(objTodo);
 		// console.log('todoTr: ', todoTr);
 
-		const fnew = createMyForm();
+		const fnew = createMyForm(objTodo);
 		todoTr.appendChild(fnew);
 	
 		list.append(todoTr);
@@ -112,18 +113,21 @@ export const getbtnsave = (form) => {
 
 };
 
-export function createMyForm() {
+export function createMyForm(objTodo) {
 	const myform = document.createElement('td');
+	console.log('objTodo.priority', objTodo.priority, objTodo);
+	
 	myform.innerHTML = `
-		<form class="my-form" name="f1"> 
-			<select name="town" id="s1" class="form-input">
-				<option class="table-light" value="обычная">обычная</option>
-				<option class="table-warning" value="важная">важная</option>
-				<option class="table-danger" value="срочная">срочная</option>
+		<form class="my-form" name="f1" > 
+			<select name="town" id="s1" class="form-input">			
+				<option class="table-light" value="${objTodo.priority}" selected="selected">обычная</option>
+				<option class="table-warning" value="${objTodo.priority}" selected="selected">важная</option>
+				<option class="table-danger" value="${objTodo.priority}" selected="selected">срочная</option>
 			</select>
-				<input type="button" class="value" value="ok">
+				<input type="button" class="value" value="${objTodo.priority}">
 		</form>
 	`;
+	
 
 	return myform;
 
@@ -156,8 +160,9 @@ function createTodo(objTodo) {
 	tr.innerHTML = todoItem;
 
 	if (objTodo.ready === 'В процессе') {
-		tr.classList = "";
-		tr.classList.add('table-light');		
+		// tr.classList = "";
+		// tr.classList.add('table-light');
+		
 	} else if (objTodo.ready === 'Выполнена') {
 		tr.classList = "";
 		tr.classList.add('table-success');
@@ -177,11 +182,14 @@ function createTodo(objTodo) {
 
 function renderTodo(list) {
 	// getTodoLS(username);
+	console.log('base.todo', base.todo);
 	if (base.todo) {
 		for (let i = 0; i < base.todo.length; i++) {
 			const todoLi = createTodo(base.todo[i]);
 			// console.log('todoLi from renderTodo', todoLi);
-			todoLi.appendChild(createMyForm());
+			// todoLi.appendChild(createMyForm());
+			todoLi.appendChild(createMyForm(base.todo[i]));
+			// todoLi.appendChild(createMyForm(base.todo[i].priority));
 			list.append(todoLi);			
 		};
 	}

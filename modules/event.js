@@ -11,29 +11,32 @@ export const getbtndel = (form, list, div) => {
 		// console.log('trdel', trdel);
 
 		if (nbtn) {
+			const result = confirm('Вы хотите удалить задачу?');
+			if(result) {
+				let first = event.target.closest('tr');
+				// console.log('first', first);
+				let num = (first.firstElementChild);
+				// console.log('num', Number(num.innerHTML));
 
-			let first = event.target.closest('tr');
-			// console.log('first', first);
-			let num = (first.firstElementChild);
-			// console.log('num', Number(num.innerHTML));
+				let idd = Number(num.innerHTML);
+				console.log('id который удалять:', idd);
 
-			let idd = Number(num.innerHTML);
-			console.log('id который удалять:', idd);
+				// let num2 = (num.nextSibling);
+				// console.log('num2', num2);
+				// const post = (num2.nextSibling.innerHTML).getTodoLS();
+				// console.log('post', post);
 
-			// let num2 = (num.nextSibling);
-			// console.log('num2', num2);
-			// const post = (num2.nextSibling.innerHTML).getTodoLS();
-			// console.log('post', post);
+				trdel.remove();
 
-			trdel.remove();
+				let newdata = base.todo.filter(el => el.id != idd);
 
-			let newdata = base.todo.filter(el => el.id != idd);
+				console.log('newdata', newdata);
+				base.todo = newdata;
 
-			console.log('newdata', newdata);
-			base.todo = newdata;
+				setTodoLS();
+				console.log('base.todo', base.todo);
+			}
 
-			setTodoLS();
-			console.log('base.todo', base.todo);
 
 
 		};
@@ -56,7 +59,7 @@ export const getdonempost = (form, list, div) => {
 			// console.log('first', first);
 
 			let num = (first.firstElementChild);
-			// console.log('num', num, Number(num.innerHTML));
+			console.log('num', num, Number(num.innerHTML));
 
 			base.check(Number(num.innerHTML));
 			setTodoLS();
@@ -105,6 +108,7 @@ export const getcontediatable = (list) => {
 		for (var i = 0; i < tasks.length; i++) {
 			if (tasks[i].contentEditable === "false") {
 				const btnm1 = event.target.closest('.btn.btn-secondary');
+								
 				btnm1.innerText = "Сохранить";
 				// console.log('нажали на кнопку')
 
@@ -153,7 +157,7 @@ export const getcontediatable = (list) => {
 			} else {
 				const btnm2 = event.target.closest('.btn.btn-secondary');
 				btnm2.innerText = "Редактировать";
-				console.log('блок сохранить');
+				// console.log('блок сохранить');
 				
 				// console.log('tasks[i].previousElementSibling.innerHTML', taski[y].previousElementSibling.textContent);
 				tasks[i].setAttribute('contenteditable', 'false');
