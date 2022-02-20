@@ -34,7 +34,7 @@ export const getbtndel = (form, list, div) => {
 				base.todo = newdata;
 
 				setTodoLS();
-				console.log('base.todo', base.todo);
+				// console.log('base.todo', base.todo);
 			}
 
 
