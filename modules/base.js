@@ -96,7 +96,7 @@ export const getbtnsave = (form) => {
 		const todoTr = createTodo(objTodo);
 		// console.log('todoTr: ', todoTr);
 
-		const fnew = createMyForm(objTodo);
+		const fnew = createMyForm(objTodo, list);
 		todoTr.appendChild(fnew);
 		setTodoLS();
 		list.append(todoTr);
@@ -127,37 +127,103 @@ export function createMyForm(objTodo) {
 				<input type="button" class="value" value="${objTodo.priority}">
 		</form>
 	`;
-	setTodoLS();
-	
-	const btnform = document.querySelectorAll('.value');
-	
-	for (var i = 0; i < btnform.length; i++) {
-		
-		// btnform[i].classList.add('table-success');
-		
-		if (btnform[i].value === 'обычная') {
-			// console.log('обычная');
-			console.log('btnform: ', btnform[i].value);
-			btnform[i].style.backgroundColor = "white";
-			
-		};
-		
-		if (btnform[i].value === 'важная') {
-			// console.log('важная');
-			btnform[i].style.backgroundColor = "yellow";
-			
-		};
-		
-		if (btnform[i].value === 'срочная') {
-			// console.log('срочная');
-			btnform[i].style.backgroundColor = "red";
-			
-		};
 
-		setTodoLS();
+	getTodoLS();
+	setTodoLS();
+
+	let btncolor = myform.getElementsByTagName("input")[0];
+	console.log('btncolor: ', btncolor.value);
+	if (btncolor.value === 'обычная') {
+		
+		// console.log('btnform: ', btnform[i].value);
+
+		btncolor.style.backgroundColor = "white";
+
 	};
+
 	
-	
+	if (btncolor.value === 'важная') {
+		
+
+		btncolor.style.backgroundColor = "yellow";
+
+	};
+
+
+	if (btncolor.value === 'срочная') {
+		
+		btncolor.style.backgroundColor = "red";
+
+
+	};
+
+
+	function fvalue(e) {
+		e.preventDefault();
+
+		const btnform = document.querySelectorAll('.value');	
+		
+
+		for (var i = 0; i < btnform.length; i++) { 
+			if (btnform[i].previousElementSibling.value === 'обычная') {
+				console.log('клик обычная');
+				// console.log('btnform: ', btnform[i].value);
+			
+				getTodoLS();
+				btnform[i].value = 'обычная';
+
+				// console.log('base.todo[i].priority from getvalue1', base.todo[i].priority);
+				base.todo[i].priority = 'обычная';
+				setTodoLS();
+				btnform[i].style.backgroundColor = "white";
+				
+				
+			};
+			getTodoLS();
+			setTodoLS();
+
+			if (btnform[i].previousElementSibling.value === 'важная') {
+				console.log('клик важная');
+		
+				getTodoLS();
+				btnform[i].value = 'важная';
+
+				// console.log('base.todo[i].priority from getvalue1', base.todo[i].priority);
+				base.todo[i].priority = 'важная';
+				setTodoLS();
+				btnform[i].style.backgroundColor = "yellow";
+		
+				
+				
+			};
+			getTodoLS();
+			setTodoLS();
+
+			if (btnform[i].previousElementSibling.value === 'срочная') {
+				console.log('клик срочная');
+
+				getTodoLS();
+				btnform[i].value = 'срочная';
+
+
+				// console.log('base.todo[i].priority from getvalue1', base.todo[i].priority);
+				base.todo[i].priority = 'срочная';
+				setTodoLS();
+				btnform[i].style.backgroundColor = "red";
+			
+				
+				
+			};
+			getTodoLS();
+			setTodoLS();
+
+		}
+
+	}
+
+	setTodoLS();
+	list.addEventListener('click', fvalue);
+
 	return myform;
 
 };
@@ -211,6 +277,7 @@ function createTodo(objTodo) {
 
 function renderTodo(list) {
 	// getTodoLS(username);
+	getTodoLS();
 	
 	if (base.todo) {
 		for (let i = 0; i < base.todo.length; i++) {
@@ -219,11 +286,15 @@ function renderTodo(list) {
 			// console.log('todoLi from renderTodo', todoLi);
 			// todoLi.appendChild(createMyForm());
 			todoLi.appendChild(createMyForm(base.todo[i]));
+			
 			// todoLi.appendChild(createMyForm(base.todo[i].priority));
 			list.append(todoLi);
 		};
 	}
-};
+	
+	setTodoLS();
+}; 
+
 
 
 
