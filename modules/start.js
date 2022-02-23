@@ -1,6 +1,6 @@
 import { base, getbtnsave } from "./base.js";
 import { getbtndel, getdonempost, getcontediatable } from "./event.js";
-// import { getvalue } from "./local.js";
+
 
 export const form = document.createElement('form');
 export const div = document.createElement('div');

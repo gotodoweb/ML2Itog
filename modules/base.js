@@ -113,120 +113,7 @@ export const getbtnsave = (form) => {
 
 };
 
-export function createMyForm(objTodo) {
-	const myform = document.createElement('td');
-	// console.log('objTodo.priority', objTodo.priority, objTodo);
 
-	myform.innerHTML = `
-		<form class="my-form" name="f1" > 
-			<select name="town" id="s1" class="form-input">			
-				<option class="table-light" selected="selected">обычная</option>
-				<option class="table-warning" selected="selected">важная</option>
-				<option class="table-danger" selected="selected">срочная</option>
-			</select>
-				<input type="button" class="value" value="${objTodo.priority}">
-		</form>
-	`;
-
-	getTodoLS();
-	setTodoLS();
-
-	let btncolor = myform.getElementsByTagName("input")[0];
-	console.log('btncolor: ', btncolor.value);
-	if (btncolor.value === 'обычная') {
-		
-		// console.log('btnform: ', btnform[i].value);
-
-		btncolor.style.backgroundColor = "white";
-
-	};
-
-	
-	if (btncolor.value === 'важная') {
-		
-
-		btncolor.style.backgroundColor = "yellow";
-
-	};
-
-
-	if (btncolor.value === 'срочная') {
-		
-		btncolor.style.backgroundColor = "red";
-
-
-	};
-
-
-	function fvalue(e) {
-		e.preventDefault();
-
-		const btnform = document.querySelectorAll('.value');	
-		
-
-		for (var i = 0; i < btnform.length; i++) { 
-			if (btnform[i].previousElementSibling.value === 'обычная') {
-				console.log('клик обычная');
-				// console.log('btnform: ', btnform[i].value);
-			
-				getTodoLS();
-				btnform[i].value = 'обычная';
-
-				// console.log('base.todo[i].priority from getvalue1', base.todo[i].priority);
-				base.todo[i].priority = 'обычная';
-				setTodoLS();
-				btnform[i].style.backgroundColor = "white";
-				
-				
-			};
-			getTodoLS();
-			setTodoLS();
-
-			if (btnform[i].previousElementSibling.value === 'важная') {
-				console.log('клик важная');
-		
-				getTodoLS();
-				btnform[i].value = 'важная';
-
-				// console.log('base.todo[i].priority from getvalue1', base.todo[i].priority);
-				base.todo[i].priority = 'важная';
-				setTodoLS();
-				btnform[i].style.backgroundColor = "yellow";
-		
-				
-				
-			};
-			getTodoLS();
-			setTodoLS();
-
-			if (btnform[i].previousElementSibling.value === 'срочная') {
-				console.log('клик срочная');
-
-				getTodoLS();
-				btnform[i].value = 'срочная';
-
-
-				// console.log('base.todo[i].priority from getvalue1', base.todo[i].priority);
-				base.todo[i].priority = 'срочная';
-				setTodoLS();
-				btnform[i].style.backgroundColor = "red";
-			
-				
-				
-			};
-			getTodoLS();
-			setTodoLS();
-
-		}
-
-	}
-
-	setTodoLS();
-	list.addEventListener('click', fvalue);
-
-	return myform;
-
-};
 
 function createTodo(objTodo) {
 
@@ -249,36 +136,233 @@ function createTodo(objTodo) {
 					</button>
 				</td>
 
-			</tr>			
-		`;
+			</tr>
+			`;
 	const tr = document.createElement('tr');
 	tr.innerHTML = todoItem;
-
-	if (objTodo.ready === 'В процессе') {
-		// tr.classList = "";
-		// tr.classList.add('table-light');
-
-	} else if (objTodo.ready === 'Выполнена') {
+	// tr.classList = "";
+	// tr.classList.add('begin');
+	if (objTodo.ready === 'Выполнена') {
 		tr.classList = "";
 		tr.classList.add('table-success');
 
 		let tdtask = tr.firstElementChild;
 		let totasknext = tdtask.nextSibling;
+		// console.log('totasknext: ', totasknext);
 
 		totasknext.nextSibling.classList.add('text-decoration-line-through');
 	};
+
+	if (objTodo.ready === 'В процессе') {
+		// tr.classList = "";
+		// tr.classList.add('begin');
+		if (`${objTodo.priority}` === 'обычная') {
+
+			tr.classList = '';
+			tr.classList.add('table-light');
+		};
+
+
+		if (`${objTodo.priority}` === 'важная') {
+
+			tr.classList = '';
+			tr.classList.add('table-warning');
+		};
+
+		if (`${objTodo.priority}` === 'срочная') {
+
+			tr.classList = '';
+			tr.classList.add('table-danger');
+		};
+
+	};
+	
+
 
 	return tr;
 
 };
 
+export function createMyForm(objTodo) {
+	const myform = document.createElement('td');
+	// console.log('objTodo.priority', objTodo.priority, objTodo);
 
+	myform.innerHTML = `
+		<form class="my-form" name="f1" > 
+			<select name="town" id="s1" class="form-input">			
+				<option class="table-light" selected="selected">обычная</option>
+				<option class="table-warning" selected="selected">важная</option>
+				<option class="table-danger" selected="selected">срочная</option>
+			</select>
+				<input type="button" class="value" value="${objTodo.priority}">
+		</form>
+	`;
+
+
+
+	if (`${objTodo.priority}` === 'обычная') {
+		myform.innerHTML = `
+			<form class="my-form" name="f1" >
+				<select name="town" id="s1" class="form-input">
+					<option class="table-warning" selected="selected">важная</option>
+					<option class="table-danger" selected="selected">срочная</option>
+					<option class="table-light" selected="selected">обычная</option>
+				</select>
+				<input type="button" class="value" value="${objTodo.priority}">
+			</form>
+		`;
+
+	};
+
+	if (`${objTodo.priority}` === 'важная') {
+		myform.innerHTML = `
+			<form class="my-form" name="f1" >
+				<select name="town" id="s1" class="form-input">
+					<option class="table-danger" selected="selected">срочная</option>
+					<option class="table-light" selected="selected">обычная</option>
+					<option class="table-warning" selected="selected">важная</option>
+				</select>
+				<input type="button" class="value" value="${objTodo.priority}">
+			</form>
+		`;
+
+	};
+
+	if (`${objTodo.priority}` === 'срочная') {
+		myform.innerHTML = `
+			<form class="my-form" name="f1" >
+				<select name="town" id="s1" class="form-input">
+					<option class="table-light" selected="selected">обычная</option>
+					<option class="table-warning" selected="selected">важная</option>
+					<option class="table-danger" selected="selected">срочная</option>
+				</select>
+				<input type="button" class="value" value="${objTodo.priority}">
+			</form>
+		`;
+
+	};
+
+
+	getTodoLS();
+	setTodoLS();
+
+	let btncolor = myform.getElementsByTagName("input")[0];
+	// console.log('btncolor: ', btncolor.value);
+	if (btncolor.value === 'обычная') {
+
+		// console.log('btnform: ', btnform[i].value);
+
+		btncolor.style.backgroundColor = "white";
+
+	};
+
+
+	if (btncolor.value === 'важная') {
+
+		btncolor.style.backgroundColor = "yellow";
+
+	};
+
+
+	if (btncolor.value === 'срочная') {
+
+		btncolor.style.backgroundColor = "red";
+
+	};
+
+
+	function fvalue(e) {
+		e.preventDefault();
+
+		const btnform = document.querySelectorAll('.value');
+
+
+		for (var i = 0; i < btnform.length; i++) {
+			if (btnform[i].previousElementSibling.value === 'обычная') {
+
+				getTodoLS();
+				btnform[i].value = 'обычная';
+
+				// console.log('base.todo[i].priority from getvalue1', base.todo[i].priority);
+				base.todo[i].priority = 'обычная';
+				setTodoLS();
+				btnform[i].style.backgroundColor = "white";
+
+				let gettr = e.target.closest('tr');
+				// console.log('gettr: ', gettr);
+				let gettrue = gettr.classList.contains('table-success');
+				if(!gettrue) {
+					gettr.classList = "";
+					gettr.classList.add('table-light');
+				}
+
+				setTodoLS();
+			};
+			getTodoLS();
+			setTodoLS();
+
+			if (btnform[i].previousElementSibling.value === 'важная') {
+
+				getTodoLS();
+				btnform[i].value = 'важная';
+
+				// console.log('base.todo[i].priority from getvalue1', base.todo[i].priority);
+				base.todo[i].priority = 'важная';
+				setTodoLS();
+				btnform[i].style.backgroundColor = "yellow";
+
+				let gettr = btnform[i].closest('tr');
+				let gettrue = gettr.classList.contains('table-success');
+				if (!gettrue) {
+					gettr.classList = "";
+					gettr.classList.add('table-warning');
+				}
+				setTodoLS();
+
+			};
+			getTodoLS();
+			setTodoLS();
+
+			if (btnform[i].previousElementSibling.value === 'срочная') {
+
+				getTodoLS();
+				btnform[i].value = 'срочная';
+
+
+				// console.log('base.todo[i].priority from getvalue1', base.todo[i].priority);
+				base.todo[i].priority = 'срочная';
+				setTodoLS();
+				btnform[i].style.backgroundColor = "red";
+
+				let gettr = btnform[i].closest('tr');
+				let gettrue = gettr.classList.contains('table-success');
+				if (!gettrue) {
+					gettr.classList = "";
+					gettr.classList.add('table-danger');
+				}
+
+
+				setTodoLS();
+			};
+			getTodoLS();
+			setTodoLS();
+
+		}
+
+	}
+
+	setTodoLS();
+	list.addEventListener('click', fvalue);
+
+	return myform;
+
+};
 
 
 function renderTodo(list) {
 	// getTodoLS(username);
 	getTodoLS();
-	
+
 	if (base.todo) {
 		for (let i = 0; i < base.todo.length; i++) {
 			// console.log('base.todo[i]', base.todo[i].priority);
@@ -286,14 +370,14 @@ function renderTodo(list) {
 			// console.log('todoLi from renderTodo', todoLi);
 			// todoLi.appendChild(createMyForm());
 			todoLi.appendChild(createMyForm(base.todo[i]));
-			
+
 			// todoLi.appendChild(createMyForm(base.todo[i].priority));
 			list.append(todoLi);
 		};
 	}
-	
+
 	setTodoLS();
-}; 
+};
 
 
 
