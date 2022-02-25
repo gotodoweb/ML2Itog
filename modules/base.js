@@ -1,4 +1,4 @@
-import { form, div, table, list } from "./start.js";
+import { form, div, table, list, getuser } from "./start.js";
 
 import { getTodoLS, setTodoLS } from "./local.js";
 
@@ -7,15 +7,125 @@ import { getTodoLS, setTodoLS } from "./local.js";
 const findlist = document.querySelector('.find');
 
 
-const username = prompt('Введите ваше имя', 'Vlad');
+let username = 'Vlad';
+
+
+let newform = document.querySelector('.app-container');
+let formnew = `
+
+		<div class="wrapper">
+			<a href="#" class="open-popup">START</a>
+		</div>
+
+		<div class="popup__bg">
+			<form class="popup">
+				<svg class="close-popup" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#2982ff" d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
+				<label>
+					<input type="text" name="name" id="tratata">
+					<div class="label__text">
+						Ваше имя
+					</div>
+				</label>
+				<label>
+					<input type="tel" name="tel">
+					<div class="label__text">
+						Ваш телефон
+					</div>
+				</label>
+				<label>
+					<textarea name="message"></textarea>
+					<div class="label__text">
+						Ваше сообщение
+					</div>
+				</label>
+				<button type="submit" class='fd'>Отправить</button>
+			</form>
+		</div>  
+
+`
+const newforma = document.createElement('div');
+newforma.innerHTML = formnew;
+
+newform.append(newforma);
+
+
+
+let uname = newforma.querySelector('[name="name"]');
+
+let popupBg = document.querySelector('.popup__bg');
+let popup = document.querySelector('.popup');
+console.log('popup : ', popup);
+
+let openPopupButtons = document.querySelectorAll('.open-popup');
+let closePopupButton = document.querySelector('.close-popup');
+
+openPopupButtons.forEach((button) => {
+	button.addEventListener('click', (e) => {
+		e.preventDefault();
+
+		popupBg.classList.add('active');
+		popup.classList.add('active');
+		
+
+	})
+});
+
+closePopupButton.addEventListener('click', () => {
+	popupBg.classList.remove('active');
+	popup.classList.remove('active');
+
+
+});
+
+document.addEventListener('click', (e) => {
+	if (e.target === popupBg) {
+		popupBg.classList.remove('active');
+		popup.classList.remove('active');
+		console.log('popupBg');
+
+	}
+});
+
+
+
+
 
 export const getuserName = () => {
 	return username;
 }
 
+popup.addEventListener('submit', e => {
+	e.preventDefault();
+	const formData = new FormData(e.target);
+
+	console.log('submit  getMeTratata');
+
+
+	console.log([...formData.entries()]);
+
+	const datanew = Object.fromEntries(formData);
+	console.log('datanew: ', datanew.name);
+
+	// console.log('base.username', base.username);
+	// popup.reset()
+	base.newuser(datanew.name);
+	username = datanew.name;
+	
+
+});
+
+
+// let username = getMeTratata();
+// console.log('username: ', username);
+
 
 
 export const base = {
+	newuser(newname) {
+		console.log('newname', newname);
+		base.user =  newname;
+		return newname;
+	},
 	user: username,
 	todo: getTodoLS(),
 	prior: '',
@@ -55,8 +165,12 @@ export const base = {
 
 		return todo;
 	},
+
 	// getValue: getvalue(),
 };
+
+console.log("base.user", base.user);
+
 
 
 
@@ -148,7 +262,7 @@ function createTodo(objTodo) {
 
 		let tdtask = tr.firstElementChild;
 		let totasknext = tdtask.nextSibling;
-		// console.log('totasknext: ', totasknext);
+		console.log('totasknext: ', totasknext);
 
 		totasknext.nextSibling.classList.add('text-decoration-line-through');
 	};
@@ -176,7 +290,7 @@ function createTodo(objTodo) {
 		};
 
 	};
-	
+
 
 
 	return tr;
@@ -247,7 +361,7 @@ export function createMyForm(objTodo) {
 	setTodoLS();
 
 	let btncolor = myform.getElementsByTagName("input")[0];
-	// console.log('btncolor: ', btncolor.value);
+	console.log('btncolor: ', btncolor.value);
 	if (btncolor.value === 'обычная') {
 
 		// console.log('btnform: ', btnform[i].value);
@@ -291,7 +405,7 @@ export function createMyForm(objTodo) {
 				let gettr = e.target.closest('tr');
 				// console.log('gettr: ', gettr);
 				let gettrue = gettr.classList.contains('table-success');
-				if(!gettrue) {
+				if (!gettrue) {
 					gettr.classList = "";
 					gettr.classList.add('table-light');
 				}
