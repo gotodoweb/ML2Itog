@@ -1,4 +1,4 @@
-import { form, div, table, list, getuser } from "./start.js";
+import { form, div, table, list } from "./start.js";
 
 import { getTodoLS, setTodoLS } from "./local.js";
 
@@ -6,8 +6,8 @@ import { getTodoLS, setTodoLS } from "./local.js";
 
 const findlist = document.querySelector('.find');
 
-
 let username = 'Vlad';
+// let username = prompt('Name?', 'Vlad');
 
 
 let newform = document.querySelector('.app-container');
@@ -70,6 +70,8 @@ openPopupButtons.forEach((button) => {
 	})
 });
 
+
+
 closePopupButton.addEventListener('click', () => {
 	popupBg.classList.remove('active');
 	popup.classList.remove('active');
@@ -89,11 +91,6 @@ document.addEventListener('click', (e) => {
 
 
 
-
-export const getuserName = () => {
-	return username;
-}
-
 popup.addEventListener('submit', e => {
 	e.preventDefault();
 	const formData = new FormData(e.target);
@@ -101,32 +98,77 @@ popup.addEventListener('submit', e => {
 	console.log('submit  getMeTratata');
 
 
-	console.log([...formData.entries()]);
+	// console.log([...formData.entries()]);
 
 	const datanew = Object.fromEntries(formData);
-	console.log('datanew: ', datanew.name);
+	// console.log('datanew: ', datanew.name);
 
 	// console.log('base.username', base.username);
 	// popup.reset()
-	base.newuser(datanew.name);
 	username = datanew.name;
-	
+	base.newuser = datanew.name;
+	console.log('base.user0', base.user);
+	setTodoLS();
+	// username = userData(datanew.name);
+	// console.log('username', username);
 
+	// const data = {};
+	// for (const [name, value] of formData) {
+	// 	console.log(name, value);
+	// }
+
+	// userData(JSON.stringify(Object.fromEntries(formData)));
+	// userData(datanew.name);
+	// getbtnsave(form, username)
+	newforma.innerHTML = '';
 });
 
 
+// const userData = data => {
+// 	console.log('userData', data);
+// 	base.user = data;
+// 	username = data;
+// 	// return data;
+// }
+
+
+
+
+
+
 // let username = getMeTratata();
-// console.log('username: ', username);
+
+
+
+
+
+export const getuserName = () => {
+	// console.log('username from getuserName', username);
+	// if (username === base.user) {
+	// 	return username;
+	// };
+	
+	// if (username !== base.user) {
+	// 	return base.user;
+	// }
+	return username;
+}
+
+
+
 
 
 
 export const base = {
-	newuser(newname) {
-		console.log('newname', newname);
-		base.user =  newname;
-		return newname;
+	user: '',
+	set newuser(nam) {
+		this.user = nam;
+		console.log('nam from newuser', this.user);	
 	},
-	user: username,
+	fullName() {
+		console.log('username from fullName0: ', this.user);
+		// return `${this.user}`;
+	},	
 	todo: getTodoLS(),
 	prior: '',
 	check(id) {
@@ -169,13 +211,16 @@ export const base = {
 	// getValue: getvalue(),
 };
 
-console.log("base.user", base.user);
+// base.fullName();
+
 
 
 
 
 export const getbtnsave = (form) => {
 
+	// base.user = usname;
+	
 	function clearTodo(event) {
 		form[1].setAttribute('disabled', 'true');
 	};
@@ -198,6 +243,7 @@ export const getbtnsave = (form) => {
 		e.preventDefault();
 
 		const authorText = base.user;
+		
 		const postText = form[0].value;
 		// console.log(postText.length);
 		const readyText = 'В процессе';

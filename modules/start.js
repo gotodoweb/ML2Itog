@@ -12,9 +12,7 @@ list.classList.add('find');
 
 
 
-export const getuser = () => {
-	return username;
-};
+
 
 
 export const start = (app) => {
@@ -93,8 +91,9 @@ const createTable = (app, form) => {
 		
 	table.append(list);
 	div.append(table);
-
-	getbtnsave(form, app);	
+	
+	getbtnsave(form)
+	// getbtnsave(form, app);	
 	getbtndel(form, list, div);
 	getdonempost(form, list, div);
 	getcontediatable(list);
