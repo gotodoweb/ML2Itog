@@ -150,15 +150,13 @@ export const base = {
 	user: '',
 	set newuser(nam) {
 		this.user = nam;
-		console.log('nam from newuser', this.user);
-		// setTodoLS();		
+		console.log('nam from newuser', this.user);			
 	},
 	todo: getTodoLS(),
 	check(id) {
 		for (let i = 0; i < base.todo.length; i++) {
 			if (base.todo[i].id == id) {
-				base.todo[i].ready = 'Выполнена';
-				// console.log('id from check(id)', id);
+				base.todo[i].ready = 'Выполнена';	
 				setTodoLS();
 			}
 		};
@@ -167,21 +165,18 @@ export const base = {
 		for (let i = 0; i < base.todo.length; i++) {
 			if (base.todo[i].id == id) {
 				base.todo[i].priority = `${pri}`;
-				// console.log('base.todo[i].priority from checkpri', base.todo[i].priority);
 				setTodoLS();
 			}
 		};
 	},
 	addTodo(post) {
-		// getTodoLS(username);
 		const todo = {
 			id: Math.random().toString().substring(2, 7),
 			author: this.user,
 			post: post,
 			ready: 'В процессе',
 			priority: 'обычная',
-		};
-		// console.log('base.todo.priority', base.todo.priority);
+		};		
 		base.todo.push(todo);
 
 		setTodoLS();
@@ -403,7 +398,7 @@ export function createMyForm(objTodo) {
 					getTodoLS();
 					btnform[i].value = 'обычная';
 
-					// console.log('base.todo[i].priority from getvalue1', base.todo[i].priority);
+					
 					base.todo[i].priority = 'обычная';
 					setTodoLS();
 					btnform[i].style.backgroundColor = "white";

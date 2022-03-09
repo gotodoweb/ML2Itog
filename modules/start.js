@@ -55,7 +55,7 @@ const createForm = (app) => {
 		</button>
 	
 	`;
-	// form.id = 'form-todo';
+	
 	app.append(form);
 	form[1].setAttribute('disabled', 'true');
 	createTable(app, form);
@@ -93,11 +93,11 @@ const createTable = (app, form) => {
 	div.append(table);
 	
 	getbtnsave(form)
-	// getbtnsave(form, app);	
+	
 	getbtndel(form, list, div);
 	getdonempost(form, list, div);
 	getcontediatable(list);
-	// getvalue(list);
+	
 };
 
 

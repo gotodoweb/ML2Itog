@@ -66,7 +66,7 @@ export const getdonempost = (form, list, div) => {
 
 			const post = (num2.nextSibling.innerHTML).trim();
 
-			// console.log(num2.nextSibling.classList.add('text-decoration-line-through'));
+			
 			num2.nextSibling.classList.add('text-decoration-line-through');
 			first.classList = "";
 			first.classList.add('table-success');
@@ -131,7 +131,7 @@ export const getcontediatable = (list) => {
 
 
 					tasks[i].addEventListener('input', function (e) {
-						// console.log('e.target.innerHtml', e.target.previousElementSibling.innerHTML);
+						
 						// console.log('tasks[i].previousElementSibling.innerHTML', tasks[im].previousElementSibling.innerHTML);
 
 						if (tasks[im].previousElementSibling.textContent == e.target.previousElementSibling.textContent) {
