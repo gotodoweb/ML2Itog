@@ -6,20 +6,20 @@ import { getTodoLS, setTodoLS } from "./local.js";
 
 const findlist = document.querySelector('.find');
 
-let username = 'Vlad';
+
 // let username = prompt('Name?', 'Vlad');
+
+let username = 'User';
+
+
 
 
 let newform = document.querySelector('.app-container');
 let formnew = `
 
-		<div class="wrapper">
-			<a href="#" class="open-popup">START</a>
-		</div>
-
-		<div class="popup__bg">
-			<form class="popup">
-				<svg class="close-popup" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#2982ff" d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
+		<div class="popup__bg active">
+			<form class="popup active">
+				<svg class="close-popup" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24"><path fill="#2982ff" d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
 				<label>
 					<input type="text" name="name" id="tratata">
 					<div class="label__text">
@@ -54,21 +54,12 @@ let uname = newforma.querySelector('[name="name"]');
 
 let popupBg = document.querySelector('.popup__bg');
 let popup = document.querySelector('.popup');
-console.log('popup : ', popup);
+
 
 let openPopupButtons = document.querySelectorAll('.open-popup');
 let closePopupButton = document.querySelector('.close-popup');
 
-openPopupButtons.forEach((button) => {
-	button.addEventListener('click', (e) => {
-		e.preventDefault();
 
-		popupBg.classList.add('active');
-		popup.classList.add('active');
-		
-
-	})
-});
 
 
 
@@ -76,6 +67,7 @@ closePopupButton.addEventListener('click', () => {
 	popupBg.classList.remove('active');
 	popup.classList.remove('active');
 
+	setTodoLS();
 
 });
 
@@ -83,8 +75,8 @@ document.addEventListener('click', (e) => {
 	if (e.target === popupBg) {
 		popupBg.classList.remove('active');
 		popup.classList.remove('active');
-		console.log('popupBg');
 
+		setTodoLS();
 	}
 });
 
@@ -93,69 +85,64 @@ document.addEventListener('click', (e) => {
 
 popup.addEventListener('submit', e => {
 	e.preventDefault();
+
 	const formData = new FormData(e.target);
-
-	console.log('submit  getMeTratata');
-
 
 	// console.log([...formData.entries()]);
 
 	const datanew = Object.fromEntries(formData);
-	// console.log('datanew: ', datanew.name);
 
-	// console.log('base.username', base.username);
-	// popup.reset()
+
 	username = datanew.name;
+	console.log(datanew.name);
 	base.newuser = datanew.name;
-	console.log('base.user0', base.user);
+
+
+
+	if (localStorage.hasOwnProperty(datanew.name)) {
+		list.innerHTML = `<tbody class="find"></tbody>`;
+
+
+		base.todo = JSON.parse(localStorage.getItem(datanew.name));
+		// console.log('base.todo', base.todo);
+
+
+		// console.log('list', list);
+
+
+		if (base.todo) {
+			for (let i = 0; i < base.todo.length; i++) {
+				// console.log('base.todo[i]', base.todo[i].priority);
+				const todoLi = createTodo(base.todo[i]);
+
+				todoLi.appendChild(createMyForm(base.todo[i]));
+
+				list.append(todoLi);
+				getid();
+			};
+		} 
+
+
+	} else {
+		base.todo = [];
+		list.innerHTML = `
+		<tbody>
+
+			
+		</tbody>
+	`;
+	}
 	setTodoLS();
-	// username = userData(datanew.name);
-	// console.log('username', username);
 
-	// const data = {};
-	// for (const [name, value] of formData) {
-	// 	console.log(name, value);
-	// }
 
-	// userData(JSON.stringify(Object.fromEntries(formData)));
-	// userData(datanew.name);
-	// getbtnsave(form, username)
 	newforma.innerHTML = '';
 });
 
 
-// const userData = data => {
-// 	console.log('userData', data);
-// 	base.user = data;
-// 	username = data;
-// 	// return data;
-// }
-
-
-
-
-
-
-// let username = getMeTratata();
-
-
-
-
 
 export const getuserName = () => {
-	// console.log('username from getuserName', username);
-	// if (username === base.user) {
-	// 	return username;
-	// };
-	
-	// if (username !== base.user) {
-	// 	return base.user;
-	// }
 	return username;
 }
-
-
-
 
 
 
@@ -163,14 +150,10 @@ export const base = {
 	user: '',
 	set newuser(nam) {
 		this.user = nam;
-		console.log('nam from newuser', this.user);	
+		console.log('nam from newuser', this.user);
+		// setTodoLS();		
 	},
-	fullName() {
-		console.log('username from fullName0: ', this.user);
-		// return `${this.user}`;
-	},	
 	todo: getTodoLS(),
-	prior: '',
 	check(id) {
 		for (let i = 0; i < base.todo.length; i++) {
 			if (base.todo[i].id == id) {
@@ -192,7 +175,7 @@ export const base = {
 	addTodo(post) {
 		// getTodoLS(username);
 		const todo = {
-			id: base.todo.length + 1,
+			id: Math.random().toString().substring(2, 7),
 			author: this.user,
 			post: post,
 			ready: 'В процессе',
@@ -200,18 +183,15 @@ export const base = {
 		};
 		// console.log('base.todo.priority', base.todo.priority);
 		base.todo.push(todo);
-		// console.log('todo from addTodo', base.todo);
-		// return base.todo[base.todo.length - 1];
+
 		setTodoLS();
-		// console.log("priority from addTodo", todo.priority);
+
 
 		return todo;
 	},
 
-	// getValue: getvalue(),
-};
 
-// base.fullName();
+};
 
 
 
@@ -219,8 +199,7 @@ export const base = {
 
 export const getbtnsave = (form) => {
 
-	// base.user = usname;
-	
+
 	function clearTodo(event) {
 		form[1].setAttribute('disabled', 'true');
 	};
@@ -229,7 +208,7 @@ export const getbtnsave = (form) => {
 	btnclear.addEventListener('click', clearTodo);
 
 	function checkTodo(event) {
-		// console.log('click');
+
 		form[1].removeAttribute('disabled');
 	};
 
@@ -243,26 +222,25 @@ export const getbtnsave = (form) => {
 		e.preventDefault();
 
 		const authorText = base.user;
-		
+
 		const postText = form[0].value;
-		// console.log(postText.length);
+
 		const readyText = 'В процессе';
 
 
 		const objTodo = base.addTodo(postText);
-		// console.log('objTodo',objTodo.priority);
-		// console.log('base.todo', base.todo);
+
 
 		const todoTr = createTodo(objTodo);
-		// console.log('todoTr: ', todoTr);
+
 
 		const fnew = createMyForm(objTodo, list);
 		todoTr.appendChild(fnew);
 		setTodoLS();
 		list.append(todoTr);
+		getid();
 
 
-		// console.log('base.todo.length', base.todo.length);
 		form[1].setAttribute('disabled', 'true');
 		form.reset();
 
@@ -273,13 +251,19 @@ export const getbtnsave = (form) => {
 
 };
 
+export function getid() {
+	let allid = document.querySelectorAll('.count');
+	allid.forEach((item, i) => item.textContent = i + 1);
+	setTodoLS();
+};
+
 
 
 function createTodo(objTodo) {
 
 	const todoItem = `
 			<tr>			
-				<td class="goods__row">${objTodo.id = Math.random().toString().substring(2, 7)}</td>
+				<td class="count"></td>
 				<td contenteditable="false" class="task">
 					${objTodo.post}
 				</td>
@@ -300,22 +284,20 @@ function createTodo(objTodo) {
 			`;
 	const tr = document.createElement('tr');
 	tr.innerHTML = todoItem;
-	// tr.classList = "";
-	// tr.classList.add('begin');
+
 	if (objTodo.ready === 'Выполнена') {
 		tr.classList = "";
 		tr.classList.add('table-success');
 
 		let tdtask = tr.firstElementChild;
 		let totasknext = tdtask.nextSibling;
-		console.log('totasknext: ', totasknext);
+
 
 		totasknext.nextSibling.classList.add('text-decoration-line-through');
 	};
 
 	if (objTodo.ready === 'В процессе') {
-		// tr.classList = "";
-		// tr.classList.add('begin');
+
 		if (`${objTodo.priority}` === 'обычная') {
 
 			tr.classList = '';
@@ -345,7 +327,7 @@ function createTodo(objTodo) {
 
 export function createMyForm(objTodo) {
 	const myform = document.createElement('td');
-	// console.log('objTodo.priority', objTodo.priority, objTodo);
+
 
 	myform.innerHTML = `
 		<form class="my-form" name="f1" > 
@@ -368,9 +350,10 @@ export function createMyForm(objTodo) {
 					<option class="table-danger" selected="selected">срочная</option>
 					<option class="table-light" selected="selected">обычная</option>
 				</select>
-				<input type="button" class="value" value="${objTodo.priority}">
+				<input type="button" class="value" style='background: white' value="${objTodo.priority}">
 			</form>
 		`;
+
 
 	};
 
@@ -382,7 +365,7 @@ export function createMyForm(objTodo) {
 					<option class="table-light" selected="selected">обычная</option>
 					<option class="table-warning" selected="selected">важная</option>
 				</select>
-				<input type="button" class="value" value="${objTodo.priority}">
+				<input type="button" class="value" style='background: yellow' value="${objTodo.priority}">
 			</form>
 		`;
 
@@ -396,37 +379,10 @@ export function createMyForm(objTodo) {
 					<option class="table-warning" selected="selected">важная</option>
 					<option class="table-danger" selected="selected">срочная</option>
 				</select>
-				<input type="button" class="value" value="${objTodo.priority}">
+				<input type="button" class="value" style='background: red' value="${objTodo.priority}">
 			</form>
 		`;
 
-	};
-
-
-	getTodoLS();
-	setTodoLS();
-
-	let btncolor = myform.getElementsByTagName("input")[0];
-	console.log('btncolor: ', btncolor.value);
-	if (btncolor.value === 'обычная') {
-
-		// console.log('btnform: ', btnform[i].value);
-
-		btncolor.style.backgroundColor = "white";
-
-	};
-
-
-	if (btncolor.value === 'важная') {
-
-		btncolor.style.backgroundColor = "yellow";
-
-	};
-
-
-	if (btncolor.value === 'срочная') {
-
-		btncolor.style.backgroundColor = "red";
 
 	};
 
@@ -440,69 +396,74 @@ export function createMyForm(objTodo) {
 		for (var i = 0; i < btnform.length; i++) {
 			if (btnform[i].previousElementSibling.value === 'обычная') {
 
-				getTodoLS();
-				btnform[i].value = 'обычная';
+				let remont = e.target.tagName;
 
-				// console.log('base.todo[i].priority from getvalue1', base.todo[i].priority);
-				base.todo[i].priority = 'обычная';
-				setTodoLS();
-				btnform[i].style.backgroundColor = "white";
+				if (remont === 'SELECT') {
 
-				let gettr = e.target.closest('tr');
-				// console.log('gettr: ', gettr);
-				let gettrue = gettr.classList.contains('table-success');
-				if (!gettrue) {
-					gettr.classList = "";
-					gettr.classList.add('table-light');
+					getTodoLS();
+					btnform[i].value = 'обычная';
+
+					// console.log('base.todo[i].priority from getvalue1', base.todo[i].priority);
+					base.todo[i].priority = 'обычная';
+					setTodoLS();
+					btnform[i].style.backgroundColor = "white";
+
+					let gettr = btnform[i].closest('tr');;
+
+					let gettrue = gettr.classList.contains('table-success');
+					if (!gettrue) {
+						gettr.classList = "";
+						gettr.classList.add('table-light');
+					}
+
+					setTodoLS();
 				}
 
-				setTodoLS();
-			};
-			getTodoLS();
-			setTodoLS();
+			} else if (btnform[i].previousElementSibling.value === 'важная') {
 
-			if (btnform[i].previousElementSibling.value === 'важная') {
+				let remontka = e.target.tagName;
+				if (remontka === 'SELECT') {
 
-				getTodoLS();
-				btnform[i].value = 'важная';
+					getTodoLS();
+					btnform[i].value = 'важная';
 
-				// console.log('base.todo[i].priority from getvalue1', base.todo[i].priority);
-				base.todo[i].priority = 'важная';
-				setTodoLS();
-				btnform[i].style.backgroundColor = "yellow";
+					base.todo[i].priority = 'важная';
+					setTodoLS();
+					btnform[i].style.backgroundColor = "yellow";
 
-				let gettr = btnform[i].closest('tr');
-				let gettrue = gettr.classList.contains('table-success');
-				if (!gettrue) {
-					gettr.classList = "";
-					gettr.classList.add('table-warning');
-				}
-				setTodoLS();
-
-			};
-			getTodoLS();
-			setTodoLS();
-
-			if (btnform[i].previousElementSibling.value === 'срочная') {
-
-				getTodoLS();
-				btnform[i].value = 'срочная';
-
-
-				// console.log('base.todo[i].priority from getvalue1', base.todo[i].priority);
-				base.todo[i].priority = 'срочная';
-				setTodoLS();
-				btnform[i].style.backgroundColor = "red";
-
-				let gettr = btnform[i].closest('tr');
-				let gettrue = gettr.classList.contains('table-success');
-				if (!gettrue) {
-					gettr.classList = "";
-					gettr.classList.add('table-danger');
+					let gettr = btnform[i].closest('tr');
+					let gettrue = gettr.classList.contains('table-success');
+					if (!gettrue) {
+						gettr.classList = "";
+						gettr.classList.add('table-warning');
+					}
+					setTodoLS();
 				}
 
 
-				setTodoLS();
+			} else if (btnform[i].previousElementSibling.value === 'срочная') {
+
+				let peremotka = e.target.tagName;
+				if (peremotka === 'SELECT') {
+
+					getTodoLS();
+					btnform[i].value = 'срочная';
+
+					base.todo[i].priority = 'срочная';
+					setTodoLS();
+					btnform[i].style.backgroundColor = "red";
+
+					let gettr = btnform[i].closest('tr');
+					let gettrue = gettr.classList.contains('table-success');
+					if (!gettrue) {
+						gettr.classList = "";
+						gettr.classList.add('table-danger');
+					}
+
+
+					setTodoLS();
+				}
+
 			};
 			getTodoLS();
 			setTodoLS();
@@ -520,19 +481,18 @@ export function createMyForm(objTodo) {
 
 
 function renderTodo(list) {
-	// getTodoLS(username);
+
 	getTodoLS();
 
 	if (base.todo) {
 		for (let i = 0; i < base.todo.length; i++) {
 			// console.log('base.todo[i]', base.todo[i].priority);
 			const todoLi = createTodo(base.todo[i]);
-			// console.log('todoLi from renderTodo', todoLi);
-			// todoLi.appendChild(createMyForm());
+
 			todoLi.appendChild(createMyForm(base.todo[i]));
 
-			// todoLi.appendChild(createMyForm(base.todo[i].priority));
 			list.append(todoLi);
+			getid();
 		};
 	}
 
